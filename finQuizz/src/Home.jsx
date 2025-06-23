@@ -1,6 +1,9 @@
 import React, { useState } from 'react';
 
-function Home({ onStart, defaultNumQuestions = 10, defaultTimePerQuestion = 5 }) {
+const TIME_FOR_QUESTION = 15; // seconds
+
+
+function Home({ onStart, defaultNumQuestions = 10, defaultTimePerQuestion = TIME_FOR_QUESTION }) {
   const [numQuestions, setNumQuestions] = useState(defaultNumQuestions);
   const [timePerQuestion, setTimePerQuestion] = useState(defaultTimePerQuestion);
   const [error, setError] = useState('');
