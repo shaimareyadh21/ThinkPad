@@ -3,6 +3,8 @@ import Home from './Home.jsx';
 import ChatWindow from './ChatWindow.jsx';
 import './index.css';
 
+const TIME_FOR_QUESTION = 15; // seconds
+
 function getRandomQuestions(allQuestions, count) {
   const shuffled = [...allQuestions].sort(() => 0.5 - Math.random());
   return shuffled.slice(0, count);
@@ -85,36 +87,28 @@ function Quiz({ numQuestions, timePerQuestion, onRestart }) {
 
   if (!questions.length) return <div>Loading...</div>;
 
-  if (showScore && !showChat) {
+  if (showScore) {
     let message = "Good effort!";
     if (score === questions.length) message = "Perfect score! Excellent!";
     else if (score > questions.length * 0.7) message = "Great job!";
     else if (score < questions.length * 0.4) message = "Keep practicing!";
 
     return (
-      <div className="quiz-complete">
+      <div className="quiz-complete" style={{ textAlign: 'center', position: 'relative' }}>
         <h2>Quiz Complete!</h2>
         <p>Your score: <b>{score}</b> out of <b>{questions.length}</b></p>
         <p>{message}</p>
-        <button onClick={() => setShowChat(true)}>Chat with Finance Teacher</button>
+        {!showChat && (
+          <button onClick={() => setShowChat(true)}>Chat with Finance Teacher</button>
+        )}
         <br />
         <button onClick={onRestart} style={{ marginTop: 10 }}>Play Again</button>
-      </div>
-    );
-  }
-
-  if (showScore && showChat) {
-    return (
-      <div>
-        <div style={{ textAlign: 'center', marginBottom: 20 }}>
-          <h2>Quiz Complete!</h2>
-          <p>Your score: <b>{score}</b> out of <b>{questions.length}</b></p>
-          <button onClick={onRestart} style={{ marginTop: 10 }}>Play Again</button>
-        </div>
-        <ChatWindow
-          quizHistory={quizHistory}
-          onSend={async (messages) => fetchAIResponse(messages, quizHistory)}
-        />
+        {showChat && (
+          <ChatWindow
+            quizHistory={quizHistory}
+            onSend={async (messages) => fetchAIResponse(messages, quizHistory)}
+          />
+        )}
       </div>
     );
   }

@@ -35,18 +35,15 @@ function Home({ onStart, defaultNumQuestions = 10, defaultTimePerQuestion = 5 })
           onChange={e => setNumQuestions(e.target.value)}
         />
       </label>
-      <br />
-      <label>
-        Time per question (seconds):&nbsp;
-        <input
-          type="number"
-          min="1"
-          value={timePerQuestion}
-          onChange={e => setTimePerQuestion(Number(e.target.value))}
-        />
-      </label>
-      <br />
-      <button onClick={handleStart}>Start Game</button>
+      <button
+        style={{
+          backgroundColor: '#8e44ad',
+          color: '#fff',
+        }}
+        onClick={handleStart}
+      >
+        Start Game
+      </button>
       {error && <div style={{ color: 'red' }}>{error}</div>}
     </div>
   );
