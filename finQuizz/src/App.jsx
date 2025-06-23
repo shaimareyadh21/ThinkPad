@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import Home from './Home.jsx';
+import './index.css';
+
+const TIME_FOR_QUESTION = 5; // seconds
 
 function getRandomQuestions(allQuestions, count) {
-  // Shuffle and pick 'count' questions
   const shuffled = [...allQuestions].sort(() => 0.5 - Math.random());
   return shuffled.slice(0, count);
 }
@@ -13,6 +15,7 @@ function Quiz({ numQuestions, onRestart }) {
   const [selected, setSelected] = useState(null);
   const [score, setScore] = useState(0);
   const [showScore, setShowScore] = useState(false);
+  const [timeLeft, setTimeLeft] = useState(TIME_FOR_QUESTION);
 
   useEffect(() => {
     fetch('http://localhost:4000/api/questions')
@@ -23,6 +26,29 @@ function Quiz({ numQuestions, onRestart }) {
       });
   }, [numQuestions]);
 
+  useEffect(() => {
+    if (timeLeft === 0) {
+      handleTimeout();
+      return;
+    }
+
+    const timer = setInterval(() => {
+      setTimeLeft(prev => prev - 1);
+    }, 1000);
+
+    return () => clearInterval(timer);
+  }, [timeLeft]);
+
+  const handleTimeout = () => {
+    setSelected(null);
+    if (current + 1 < questions.length) {
+      setCurrent(current + 1);
+      setTimeLeft(TIME_FOR_QUESTION);
+    } else {
+      setShowScore(true);
+    }
+  };
+
   const handleChoice = (idx) => {
     setSelected(idx);
     if (idx === questions[current].answer) setScore(score + 1);
@@ -30,6 +56,7 @@ function Quiz({ numQuestions, onRestart }) {
       setSelected(null);
       if (current + 1 < questions.length) {
         setCurrent(current + 1);
+        setTimeLeft(TIME_FOR_QUESTION);
       } else {
         setShowScore(true);
       }
@@ -55,9 +82,18 @@ function Quiz({ numQuestions, onRestart }) {
   }
 
   const q = questions[current];
+  const progress = (timeLeft / TIME_FOR_QUESTION) * 100;
+
   return (
     <div>
       <h2>{q.question}</h2>
+      <div className="timer-container">
+        <div
+          className="timer-bar"
+          style={{ '--progress': `${progress}%` }}
+        ></div>
+        <div className="timer">{timeLeft}</div>
+      </div>
       <ul>
         {q.choices.map((choice, idx) => (
           <li key={idx}>
@@ -66,8 +102,10 @@ function Quiz({ numQuestions, onRestart }) {
               disabled={selected !== null}
               style={{
                 background: selected === idx
-                  ? idx === q.answer ? 'green' : 'red'
-                  : ''
+                  ? idx === q.answer
+                    ? 'green'
+                    : 'red'
+                  : '',
               }}
             >
               {choice}
