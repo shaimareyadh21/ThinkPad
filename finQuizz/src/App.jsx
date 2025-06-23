@@ -45,7 +45,7 @@ function Quiz({ numQuestions, onRestart }) {
     else if (score < questions.length * 0.4) message = "Keep practicing!";
 
     return (
-      <div style={{ textAlign: 'center' }}>
+      <div className="quiz-complete">
         <h2>Quiz Complete!</h2>
         <p>Your score: <b>{score}</b> out of <b>{questions.length}</b></p>
         <p>{message}</p>
@@ -56,26 +56,28 @@ function Quiz({ numQuestions, onRestart }) {
 
   const q = questions[current];
   return (
-    <div>
-      <h2>{q.question}</h2>
-      <ul>
-        {q.choices.map((choice, idx) => (
-          <li key={idx}>
-            <button
-              onClick={() => handleChoice(idx)}
-              disabled={selected !== null}
-              style={{
-                background: selected === idx
-                  ? idx === q.answer ? 'green' : 'red'
-                  : ''
-              }}
-            >
-              {choice}
-            </button>
-          </li>
-        ))}
-      </ul>
-      <div>Question {current + 1} of {questions.length}</div>
+    <div className="quiz-container">
+      <div className="quiz-card">
+        <h2>{q.question}</h2>
+        <ul>
+          {q.choices.map((choice, idx) => (
+            <li key={idx}>
+              <button
+                onClick={() => handleChoice(idx)}
+                disabled={selected !== null}
+                style={{
+                  background: selected === idx
+                    ? idx === q.answer ? 'green' : 'red'
+                    : ''
+                }}
+              >
+                {choice}
+              </button>
+            </li>
+          ))}
+        </ul>
+        <div>Question {current + 1} of {questions.length}</div>
+      </div>
     </div>
   );
 }
