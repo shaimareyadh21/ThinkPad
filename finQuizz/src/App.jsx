@@ -1,6 +1,13 @@
 import React, { useEffect, useState } from 'react';
+import Home from './Home.jsx';
 
-function App() {
+function getRandomQuestions(allQuestions, count) {
+  // Shuffle and pick 'count' questions
+  const shuffled = [...allQuestions].sort(() => 0.5 - Math.random());
+  return shuffled.slice(0, count);
+}
+
+function Quiz({ numQuestions }) {
   const [questions, setQuestions] = useState([]);
   const [current, setCurrent] = useState(0);
   const [selected, setSelected] = useState(null);
@@ -10,8 +17,11 @@ function App() {
   useEffect(() => {
     fetch('http://localhost:4000/api/questions')
       .then(res => res.json())
-      .then(setQuestions);
-  }, []);
+      .then(allQuestions => {
+        const n = Math.min(numQuestions, allQuestions.length);
+        setQuestions(getRandomQuestions(allQuestions, n));
+      });
+  }, [numQuestions]);
 
   const handleChoice = (idx) => {
     setSelected(idx);
@@ -53,6 +63,15 @@ function App() {
       <div>Question {current + 1} of {questions.length}</div>
     </div>
   );
+}
+
+function App() {
+  const [started, setStarted] = useState(false);
+  const [numQuestions, setNumQuestions] = useState(0);
+
+  return started
+    ? <Quiz numQuestions={numQuestions} />
+    : <Home onStart={n => { setNumQuestions(n); setStarted(true); }} />;
 }
 
 export default App;
