@@ -1,12 +1,302 @@
 [
   {
-    "question": "What is the capital of France?",
-    "choices": ["Paris", "London", "Berlin", "Madrid"],
+    "question": "What is the primary purpose of a credit score?",
+    "choices": [
+      "To determine your eligibility for government benefits",
+      "To assess your creditworthiness for lenders",
+      "To calculate your annual tax liability",
+      "To track your spending habits"
+    ],
+    "answer": 1
+  },
+  {
+    "question": "Which investment vehicle is typically considered the most diversified?",
+    "choices": [
+      "Individual stocks",
+      "Savings accounts",
+      "Mutual funds",
+      "Certificates of deposit"
+    ],
+    "answer": 2
+  },
+  {
+    "question": "What does the 'Rule of 72' help you estimate?",
+    "choices": [
+      "The number of years to double your money at a given interest rate",
+      "The maximum amount you can contribute to a 401(k)",
+      "The ideal retirement age",
+      "The minimum credit score for a mortgage"
+    ],
     "answer": 0
   },
   {
-    "question": "Which planet is known as the Red Planet?",
-    "choices": ["Earth", "Mars", "Jupiter", "Venus"],
+    "question": "Which of the following is NOT a tax-advantaged retirement account in the US?",
+    "choices": [
+      "401(k)",
+      "Roth IRA",
+      "Traditional IRA",
+      "Regular brokerage account"
+    ],
+    "answer": 3
+  },
+  {
+    "question": "If inflation is higher than the interest rate on your savings account, what happens to your money's purchasing power?",
+    "choices": [
+      "It increases",
+      "It stays the same",
+      "It decreases",
+      "It doubles"
+    ],
+    "answer": 2
+  },
+  {
+    "question": "What is a key risk of investing in individual stocks?",
+    "choices": [
+      "Guaranteed returns",
+      "Lack of liquidity",
+      "Company-specific risk",
+      "Government insurance"
+    ],
+    "answer": 2
+  },
+  {
+    "question": "Which type of loan typically has the highest interest rate?",
+    "choices": [
+      "Mortgage",
+      "Auto loan",
+      "Credit card",
+      "Student loan"
+    ],
+    "answer": 2
+  },
+  {
+    "question": "What does 'diversification' in investing aim to do?",
+    "choices": [
+      "Increase risk",
+      "Reduce risk",
+      "Eliminate taxes",
+      "Guarantee profits"
+    ],
     "answer": 1
+  },
+  {
+    "question": "Which financial statement shows a company's assets, liabilities, and equity at a specific point in time?",
+    "choices": [
+      "Income statement",
+      "Balance sheet",
+      "Cash flow statement",
+      "Statement of retained earnings"
+    ],
+    "answer": 1
+  },
+  {
+    "question": "What is the main advantage of a Roth IRA over a Traditional IRA?",
+    "choices": [
+      "Tax-free withdrawals in retirement",
+      "Higher contribution limits",
+      "Employer matching",
+      "Immediate tax deduction"
+    ],
+    "answer": 0
+  },
+  {
+    "question": "Which of the following best describes 'compound interest'?",
+    "choices": [
+      "Interest earned only on the initial principal",
+      "Interest earned on both the principal and previously earned interest",
+      "Interest paid on loans only",
+      "Interest that decreases over time"
+    ],
+    "answer": 1
+  },
+  {
+    "question": "What is an ETF?",
+    "choices": [
+      "Employee Trust Fund",
+      "Exchange-Traded Fund",
+      "Equity Transfer Facility",
+      "Electronic Tax Form"
+    ],
+    "answer": 1
+  },
+  {
+    "question": "Which of the following is a consequence of making only the minimum payment on a credit card?",
+    "choices": [
+      "No interest is charged",
+      "Debt is paid off quickly",
+      "Interest accrues on the remaining balance",
+      "Credit score increases rapidly"
+    ],
+    "answer": 2
+  },
+  {
+    "question": "What is a 'bear market'?",
+    "choices": [
+      "A market with rising prices",
+      "A market with falling prices",
+      "A market with stable prices",
+      "A market with no trading"
+    ],
+    "answer": 1
+  },
+  {
+    "question": "Which of the following is NOT a benefit of budgeting?",
+    "choices": [
+      "Helps control spending",
+      "Ensures unlimited income",
+      "Helps achieve financial goals",
+      "Reduces financial stress"
+    ],
+    "answer": 1
+  },
+  {
+    "question": "Which of the following is an example of 'liquidity risk'?",
+    "choices": [
+      "A stock price drops suddenly",
+      "You cannot sell an asset quickly without losing value",
+      "Interest rates rise unexpectedly",
+      "Inflation erodes purchasing power"
+    ],
+    "answer": 1
+  },
+  {
+    "question": "What is the main risk of using leverage (borrowed money) in investing?",
+    "choices": [
+      "Lower returns",
+      "Higher taxes",
+      "Magnified losses",
+      "Reduced diversification"
+    ],
+    "answer": 2
+  },
+  {
+    "question": "Which of the following is NOT included in your credit report?",
+    "choices": [
+      "Your payment history",
+      "Your current salary",
+      "Your total debt",
+      "The number of credit inquiries"
+    ],
+    "answer": 1
+  },
+  {
+    "question": "What does 'dollar-cost averaging' mean in investing?",
+    "choices": [
+      "Investing a fixed amount at regular intervals regardless of price",
+      "Investing only when the market is low",
+      "Investing all your money at once",
+      "Investing in foreign currencies"
+    ],
+    "answer": 0
+  },
+  {
+    "question": "Which of the following is a potential drawback of index funds?",
+    "choices": [
+      "High management fees",
+      "Lack of diversification",
+      "Cannot outperform the market",
+      "No exposure to stocks"
+    ],
+    "answer": 2
+  },
+  {
+    "question": "What is the main difference between a traditional 401(k) and a Roth 401(k)?",
+    "choices": [
+      "Contribution limits",
+      "Tax treatment of contributions and withdrawals",
+      "Employer matching",
+      "Investment options"
+    ],
+    "answer": 1
+  },
+  {
+    "question": "Which financial ratio measures a company's ability to pay short-term obligations?",
+    "choices": [
+      "Debt-to-equity ratio",
+      "Current ratio",
+      "Price-to-earnings ratio",
+      "Return on equity"
+    ],
+    "answer": 1
+  },
+  {
+    "question": "What is 'short selling' in the stock market?",
+    "choices": [
+      "Buying stocks for the short term",
+      "Selling stocks you do not own, hoping to buy them back at a lower price",
+      "Selling stocks after a short period",
+      "Selling stocks at a loss"
+    ],
+    "answer": 1
+  },
+  {
+    "question": "Which of the following is a progressive tax?",
+    "choices": [
+      "Sales tax",
+      "Flat tax",
+      "Income tax",
+      "Property tax"
+    ],
+    "answer": 2
+  },
+  {
+    "question": "What is the main purpose of an emergency fund?",
+    "choices": [
+      "To invest in stocks",
+      "To cover unexpected expenses",
+      "To pay off long-term debt",
+      "To save for retirement"
+    ],
+    "answer": 1
+  },
+  {
+    "question": "Which of the following best describes 'asset allocation'?",
+    "choices": [
+      "Choosing individual stocks",
+      "Spreading investments across different asset classes",
+      "Timing the market",
+      "Investing only in bonds"
+    ],
+    "answer": 1
+  },
+  {
+    "question": "What is the main risk of investing in bonds?",
+    "choices": [
+      "Interest rate risk",
+      "No risk",
+      "Unlimited returns",
+      "Stock market volatility"
+    ],
+    "answer": 0
+  },
+  {
+    "question": "Which of the following is NOT a feature of a Health Savings Account (HSA)?",
+    "choices": [
+      "Tax-deductible contributions",
+      "Tax-free withdrawals for qualified expenses",
+      "Funds roll over year to year",
+      "No investment options"
+    ],
+    "answer": 3
+  },
+  {
+    "question": "What does 'APR' stand for in lending?",
+    "choices": [
+      "Annual Percentage Rate",
+      "Average Payment Ratio",
+      "Annual Payment Requirement",
+      "Adjusted Principal Rate"
+    ],
+    "answer": 0
+  },
+  {
+    "question": "Which of the following is a sign of a potential investment scam?",
+    "choices": [
+      "Guaranteed high returns with little or no risk",
+      "Diversified portfolio",
+      "Registered with regulatory authorities",
+      "Transparent fee structure"
+    ],
+    "answer": 0
   }
 ]
