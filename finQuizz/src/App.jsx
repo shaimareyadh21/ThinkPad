@@ -3,8 +3,6 @@ import Home from './Home.jsx';
 import ChatWindow from './ChatWindow.jsx';
 import './index.css';
 
-const TIME_FOR_QUESTION = 5; // seconds
-
 function getRandomQuestions(allQuestions, count) {
   const shuffled = [...allQuestions].sort(() => 0.5 - Math.random());
   return shuffled.slice(0, count);
@@ -12,14 +10,13 @@ function getRandomQuestions(allQuestions, count) {
 
 // Dummy AI API call for explanation/chat (replace with your real API)
 async function fetchAIResponse(messages, quizHistory) {
-  // For demo, just echo the last user message or give a canned explanation
   if (messages.length === 0) {
     return `Hi! I'm your finance teacher. Ask me about any question you got right or wrong, and I'll help you understand.`;
   }
   return "That's a great question! [AI would answer here, using your quiz history for context]";
 }
 
-function Quiz({ numQuestions, onRestart }) {
+function Quiz({ numQuestions, timePerQuestion, onRestart }) {
   const [questions, setQuestions] = useState([]);
   const [current, setCurrent] = useState(0);
   const [selected, setSelected] = useState(null);
@@ -27,7 +24,7 @@ function Quiz({ numQuestions, onRestart }) {
   const [showScore, setShowScore] = useState(false);
   const [quizHistory, setQuizHistory] = useState([]);
   const [showChat, setShowChat] = useState(false);
-  const [timeLeft, setTimeLeft] = useState(TIME_FOR_QUESTION);
+  const [timeLeft, setTimeLeft] = useState(timePerQuestion);
 
   useEffect(() => {
     fetch('http://localhost:4000/api/questions')
@@ -55,7 +52,7 @@ function Quiz({ numQuestions, onRestart }) {
     setSelected(null);
     if (current + 1 < questions.length) {
       setCurrent(current + 1);
-      setTimeLeft(TIME_FOR_QUESTION);
+      setTimeLeft(timePerQuestion);
     } else {
       setShowScore(true);
     }
@@ -79,7 +76,7 @@ function Quiz({ numQuestions, onRestart }) {
       setSelected(null);
       if (current + 1 < questions.length) {
         setCurrent(current + 1);
-        setTimeLeft(TIME_FOR_QUESTION);
+        setTimeLeft(timePerQuestion);
       } else {
         setShowScore(true);
       }
@@ -123,7 +120,7 @@ function Quiz({ numQuestions, onRestart }) {
   }
 
   const q = questions[current];
-  const progress = (timeLeft / TIME_FOR_QUESTION) * 100;
+  const progress = (timeLeft / timePerQuestion) * 100;
 
   return (
     <div className="quiz-container">
@@ -164,10 +161,23 @@ function Quiz({ numQuestions, onRestart }) {
 function App() {
   const [started, setStarted] = useState(false);
   const [numQuestions, setNumQuestions] = useState(10);
+  const [timePerQuestion, setTimePerQuestion] = useState(5); // Default time
 
   return started
-    ? <Quiz numQuestions={numQuestions} onRestart={() => setStarted(false)} />
-    : <Home onStart={n => { setNumQuestions(n); setStarted(true); }} defaultNumQuestions={numQuestions} />;
+    ? <Quiz
+        numQuestions={numQuestions}
+        timePerQuestion={timePerQuestion}
+        onRestart={() => setStarted(false)}
+      />
+    : <Home
+        onStart={(n, time) => {
+          setNumQuestions(n);
+          setTimePerQuestion(time);
+          setStarted(true);
+        }}
+        defaultNumQuestions={numQuestions}
+        defaultTimePerQuestion={timePerQuestion}
+      />;
 }
 
 export default App;

@@ -1,17 +1,26 @@
 import React, { useState } from 'react';
 
-function Home({ onStart, defaultNumQuestions = 10 }) {
+function Home({ onStart, defaultNumQuestions = 10, defaultTimePerQuestion = 5 }) {
   const [numQuestions, setNumQuestions] = useState(defaultNumQuestions);
+  const [timePerQuestion, setTimePerQuestion] = useState(defaultTimePerQuestion);
   const [error, setError] = useState('');
 
   const handleStart = () => {
     const n = Number(numQuestions);
+    const t = Number(timePerQuestion);
+
     if (!Number.isInteger(n) || n <= 0) {
-      setError('Please enter a positive whole number.');
+      setError('Please enter a positive whole number for the number of questions.');
       return;
     }
+
+    if (!Number.isInteger(t) || t <= 0) {
+      setError('Please enter a positive whole number for the time per question.');
+      return;
+    }
+
     setError('');
-    onStart(n);
+    onStart(n, t);
   };
 
   return (
@@ -26,6 +35,17 @@ function Home({ onStart, defaultNumQuestions = 10 }) {
           onChange={e => setNumQuestions(e.target.value)}
         />
       </label>
+      <br />
+      <label>
+        Time per question (seconds):&nbsp;
+        <input
+          type="number"
+          min="1"
+          value={timePerQuestion}
+          onChange={e => setTimePerQuestion(Number(e.target.value))}
+        />
+      </label>
+      <br />
       <button onClick={handleStart}>Start Game</button>
       {error && <div style={{ color: 'red' }}>{error}</div>}
     </div>
