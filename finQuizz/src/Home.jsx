@@ -26,7 +26,15 @@ function Home({ onStart, defaultNumQuestions = 10 }) {
           onChange={e => setNumQuestions(e.target.value)}
         />
       </label>
-      <button onClick={handleStart}>Start Game</button>
+      <button
+        style={{
+          backgroundColor: '#8e44ad',
+          color: '#fff',
+        }}
+        onClick={handleStart}
+      >
+        Start Game
+      </button>
       {error && <div style={{ color: 'red' }}>{error}</div>}
     </div>
   );

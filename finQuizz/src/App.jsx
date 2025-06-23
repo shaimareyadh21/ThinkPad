@@ -3,7 +3,7 @@ import Home from './Home.jsx';
 import ChatWindow from './ChatWindow.jsx';
 import './index.css';
 
-const TIME_FOR_QUESTION = 5; // seconds
+const TIME_FOR_QUESTION = 15; // seconds
 
 function getRandomQuestions(allQuestions, count) {
   const shuffled = [...allQuestions].sort(() => 0.5 - Math.random());
