@@ -136,6 +136,7 @@ error {
 
 .quiz-card button:hover {
   background-color: #6c3483; /* Darker purple on hover */
+  transform: scale(1.05); /* Slightly enlarge the card on hover */
 }
 
 .quiz-card button:disabled {
