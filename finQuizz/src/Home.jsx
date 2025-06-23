@@ -1,15 +1,12 @@
 import React, { useState } from 'react';
 
-function Home({ onStart }) {
-  const [numQuestions, setNumQuestions] = useState('');
+function Home({ onStart, defaultNumQuestions = 10 }) {
+  const [numQuestions, setNumQuestions] = useState(defaultNumQuestions);
   const [error, setError] = useState('');
 
   const handleStart = () => {
     const n = Number(numQuestions);
-    if (
-      !Number.isInteger(n) ||
-      n <= 0
-    ) {
+    if (!Number.isInteger(n) || n <= 0) {
       setError('Please enter a positive whole number.');
       return;
     }

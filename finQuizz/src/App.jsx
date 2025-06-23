@@ -7,7 +7,7 @@ function getRandomQuestions(allQuestions, count) {
   return shuffled.slice(0, count);
 }
 
-function Quiz({ numQuestions }) {
+function Quiz({ numQuestions, onRestart }) {
   const [questions, setQuestions] = useState([]);
   const [current, setCurrent] = useState(0);
   const [selected, setSelected] = useState(null);
@@ -37,7 +37,22 @@ function Quiz({ numQuestions }) {
   };
 
   if (!questions.length) return <div>Loading...</div>;
-  if (showScore) return <div>Your score: {score}/{questions.length}</div>;
+
+  if (showScore) {
+    let message = "Good effort!";
+    if (score === questions.length) message = "Perfect score! Excellent!";
+    else if (score > questions.length * 0.7) message = "Great job!";
+    else if (score < questions.length * 0.4) message = "Keep practicing!";
+
+    return (
+      <div style={{ textAlign: 'center' }}>
+        <h2>Quiz Complete!</h2>
+        <p>Your score: <b>{score}</b> out of <b>{questions.length}</b></p>
+        <p>{message}</p>
+        <button onClick={onRestart}>Play Again</button>
+      </div>
+    );
+  }
 
   const q = questions[current];
   return (
@@ -67,11 +82,11 @@ function Quiz({ numQuestions }) {
 
 function App() {
   const [started, setStarted] = useState(false);
-  const [numQuestions, setNumQuestions] = useState(0);
+  const [numQuestions, setNumQuestions] = useState(10);
 
   return started
-    ? <Quiz numQuestions={numQuestions} />
-    : <Home onStart={n => { setNumQuestions(n); setStarted(true); }} />;
+    ? <Quiz numQuestions={numQuestions} onRestart={() => setStarted(false)} />
+    : <Home onStart={n => { setNumQuestions(n); setStarted(true); }} defaultNumQuestions={numQuestions} />;
 }
 
 export default App;
