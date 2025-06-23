@@ -1,6 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import Home from './Home.jsx';
 import ChatWindow from './ChatWindow.jsx';
+import './index.css';
+
+const TIME_FOR_QUESTION = 5; // seconds
 
 function getRandomQuestions(allQuestions, count) {
   const shuffled = [...allQuestions].sort(() => 0.5 - Math.random());
@@ -24,6 +27,7 @@ function Quiz({ numQuestions, onRestart }) {
   const [showScore, setShowScore] = useState(false);
   const [quizHistory, setQuizHistory] = useState([]);
   const [showChat, setShowChat] = useState(false);
+  const [timeLeft, setTimeLeft] = useState(TIME_FOR_QUESTION);
 
   useEffect(() => {
     fetch('http://localhost:4000/api/questions')
@@ -33,6 +37,29 @@ function Quiz({ numQuestions, onRestart }) {
         setQuestions(getRandomQuestions(allQuestions, n));
       });
   }, [numQuestions]);
+
+  useEffect(() => {
+    if (timeLeft === 0) {
+      handleTimeout();
+      return;
+    }
+
+    const timer = setInterval(() => {
+      setTimeLeft(prev => prev - 1);
+    }, 1000);
+
+    return () => clearInterval(timer);
+  }, [timeLeft]);
+
+  const handleTimeout = () => {
+    setSelected(null);
+    if (current + 1 < questions.length) {
+      setCurrent(current + 1);
+      setTimeLeft(TIME_FOR_QUESTION);
+    } else {
+      setShowScore(true);
+    }
+  };
 
   const handleChoice = (idx) => {
     const isCorrect = idx === questions[current].answer;
@@ -52,6 +79,7 @@ function Quiz({ numQuestions, onRestart }) {
       setSelected(null);
       if (current + 1 < questions.length) {
         setCurrent(current + 1);
+        setTimeLeft(TIME_FOR_QUESTION);
       } else {
         setShowScore(true);
       }
@@ -67,7 +95,7 @@ function Quiz({ numQuestions, onRestart }) {
     else if (score < questions.length * 0.4) message = "Keep practicing!";
 
     return (
-      <div style={{ textAlign: 'center' }}>
+      <div className="quiz-complete">
         <h2>Quiz Complete!</h2>
         <p>Your score: <b>{score}</b> out of <b>{questions.length}</b></p>
         <p>{message}</p>
@@ -95,27 +123,40 @@ function Quiz({ numQuestions, onRestart }) {
   }
 
   const q = questions[current];
+  const progress = (timeLeft / TIME_FOR_QUESTION) * 100;
+
   return (
-    <div>
-      <h2>{q.question}</h2>
-      <ul>
-        {q.choices.map((choice, idx) => (
-          <li key={idx}>
-            <button
-              onClick={() => handleChoice(idx)}
-              disabled={selected !== null}
-              style={{
-                background: selected === idx
-                  ? idx === q.answer ? 'green' : 'red'
-                  : ''
-              }}
-            >
-              {choice}
-            </button>
-          </li>
-        ))}
-      </ul>
-      <div>Question {current + 1} of {questions.length}</div>
+    <div className="quiz-container">
+      <div className="quiz-card">
+        <h2>{q.question}</h2>
+        <div className="timer-container">
+          <div
+            className="timer-bar"
+            style={{ '--progress': `${progress}%` }}
+          ></div>
+          <div className="timer">{timeLeft}</div>
+        </div>
+        <ul>
+          {q.choices.map((choice, idx) => (
+            <li key={idx}>
+              <button
+                onClick={() => handleChoice(idx)}
+                disabled={selected !== null}
+                style={{
+                  background: selected === idx
+                    ? idx === q.answer
+                      ? '#4CAF50' // Green for correct
+                      : '#F44336' // Red for incorrect
+                    : '#8e44ad', // Default purple
+                }}
+              >
+                {choice}
+              </button>
+            </li>
+          ))}
+        </ul>
+        <div>Question {current + 1} of {questions.length}</div>
+      </div>
     </div>
   );
 }
