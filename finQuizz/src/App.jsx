@@ -1,10 +1,19 @@
 import React, { useEffect, useState } from 'react';
 import Home from './Home.jsx';
+import ChatWindow from './ChatWindow.jsx';
 
 function getRandomQuestions(allQuestions, count) {
-  // Shuffle and pick 'count' questions
   const shuffled = [...allQuestions].sort(() => 0.5 - Math.random());
   return shuffled.slice(0, count);
+}
+
+// Dummy AI API call for explanation/chat (replace with your real API)
+async function fetchAIResponse(messages, quizHistory) {
+  // For demo, just echo the last user message or give a canned explanation
+  if (messages.length === 0) {
+    return `Hi! I'm your finance teacher. Ask me about any question you got right or wrong, and I'll help you understand.`;
+  }
+  return "That's a great question! [AI would answer here, using your quiz history for context]";
 }
 
 function Quiz({ numQuestions, onRestart }) {
@@ -13,6 +22,8 @@ function Quiz({ numQuestions, onRestart }) {
   const [selected, setSelected] = useState(null);
   const [score, setScore] = useState(0);
   const [showScore, setShowScore] = useState(false);
+  const [quizHistory, setQuizHistory] = useState([]);
+  const [showChat, setShowChat] = useState(false);
 
   useEffect(() => {
     fetch('http://localhost:4000/api/questions')
@@ -24,8 +35,19 @@ function Quiz({ numQuestions, onRestart }) {
   }, [numQuestions]);
 
   const handleChoice = (idx) => {
+    const isCorrect = idx === questions[current].answer;
     setSelected(idx);
-    if (idx === questions[current].answer) setScore(score + 1);
+    setQuizHistory(history => [
+      ...history,
+      {
+        question: questions[current].question,
+        choices: questions[current].choices,
+        correct: questions[current].answer,
+        userAnswer: idx,
+        wasCorrect: isCorrect
+      }
+    ]);
+    if (isCorrect) setScore(score + 1);
     setTimeout(() => {
       setSelected(null);
       if (current + 1 < questions.length) {
@@ -38,7 +60,7 @@ function Quiz({ numQuestions, onRestart }) {
 
   if (!questions.length) return <div>Loading...</div>;
 
-  if (showScore) {
+  if (showScore && !showChat) {
     let message = "Good effort!";
     if (score === questions.length) message = "Perfect score! Excellent!";
     else if (score > questions.length * 0.7) message = "Great job!";
@@ -49,7 +71,25 @@ function Quiz({ numQuestions, onRestart }) {
         <h2>Quiz Complete!</h2>
         <p>Your score: <b>{score}</b> out of <b>{questions.length}</b></p>
         <p>{message}</p>
-        <button onClick={onRestart}>Play Again</button>
+        <button onClick={() => setShowChat(true)}>Chat with Finance Teacher</button>
+        <br />
+        <button onClick={onRestart} style={{ marginTop: 10 }}>Play Again</button>
+      </div>
+    );
+  }
+
+  if (showScore && showChat) {
+    return (
+      <div>
+        <div style={{ textAlign: 'center', marginBottom: 20 }}>
+          <h2>Quiz Complete!</h2>
+          <p>Your score: <b>{score}</b> out of <b>{questions.length}</b></p>
+          <button onClick={onRestart} style={{ marginTop: 10 }}>Play Again</button>
+        </div>
+        <ChatWindow
+          quizHistory={quizHistory}
+          onSend={async (messages) => fetchAIResponse(messages, quizHistory)}
+        />
       </div>
     );
   }
